@@ -24,19 +24,34 @@ var game = new Phaser.Game(config);
 	var player;
 	var ennemy;
 	var cursors;
-	
-
+	var house;
+	var tree;
 
 function preload(){
-	this.load.image('background','assets/Chemin.png');
-	
+	this.load.image('background','assets/Village.png');
+	this.load.image('house','assets/House.png');
+	this.load.image('tree','assets/Arbre.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
 }
 
 function create(){
-	this.add.image(400,300,'background');
+	this.physics.world.setBounds(0, 0, 2000, 2000);
+	
+	this.add.image(1000,1000,'background');
+	
+	house = this.physics.add.staticGroup();
+	house.create(590,300,'house');
+	house.create(590,600,'house');
+	
+	tree = this.physics.add.staticGroup();
+	tree.create(590,820,'tree');
 
-	player = this.physics.add.sprite(100,450,'perso');
+	player = this.physics.add.sprite(390,300,'perso');
+	this.physics.add.collider(player,house);
+	this.physics.add.collider(player,tree);
+	
+	this.cameras.main.startFollow(player);
+	this.cameras.main.setBounds(0, 0, 2000, 2000);
 	
 	cursors = this.input.keyboard.createCursorKeys(); 
 	
@@ -73,6 +88,13 @@ function create(){
 		frames: [{key: 'perso', frame:0}],
 		frameRate: 20
 	});
+
+	
+
+
+
+
+
 }
 	
 	
@@ -81,26 +103,50 @@ function create(){
 function update(){
 	if(cursors.down.isDown){
 		player.anims.play('down', true);
-		player.setVelocityY(150);
-		player.setVelocityX(0);
-	}else if(cursors.up.isDown){
-		player.setVelocityY(-150);
-		player.setVelocityX(0);
+		if(cursors.shift.isDown){
+			player.setVelocityY(300);
+			player.setVelocityX(0);
+		}else{
+			player.setVelocityY(150);
+			player.setVelocityX(0);
+	
+	}}else if(cursors.up.isDown){
 		player.anims.play('up', true);
-	}else if(cursors.right.isDown){
-		player.setVelocityX(150);
-		player.setVelocityY(0);
+		if(cursors.shift.isDown){
+			player.setVelocityY(-300);
+			player.setVelocityX(0);
+		}else{
+			player.setVelocityY(-150);
+			player.setVelocityX(0);
+	
+	}}else if(cursors.right.isDown){
 		player.anims.play('right', true);
-	}else if(cursors.left.isDown){
-		player.setVelocityX(-150);
-		player.setVelocityY(0);
+			if(cursors.shift.isDown){
+			player.setVelocityY(0);
+			player.setVelocityX(300);
+		}else{
+			player.setVelocityY(0);
+			player.setVelocityX(150);
+	
+	}}else if(cursors.left.isDown){
 		player.anims.play('left', true);
-	}else{
+			if(cursors.shift.isDown){
+			player.setVelocityY(0);
+			player.setVelocityX(-300);
+		}else{
+			player.setVelocityY(0);
+			player.setVelocityX(-150);
+	
+		}}else{
 		player.anims.play('stop', true);
 		player.setVelocityX(0);
 		player.setVelocityY(0);
 	}
 	
+	
+
+
+
 }
 
 
