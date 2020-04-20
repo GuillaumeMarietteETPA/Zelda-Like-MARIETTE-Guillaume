@@ -28,30 +28,52 @@ var game = new Phaser.Game(config);
 	var tree;
 
 function preload(){
-	this.load.image('background','assets/Village.png');
+	this.load.image('background','assets/Village2.png');
 	this.load.image('house','assets/House.png');
+	this.load.image('house2','assets/House2.png');
 	this.load.image('tree','assets/Arbre.png');
+	this.load.image('npc','assets/npcpapi1.png');
+	this.load.image('wall','assets/Barre.png');
+	this.load.image('wallw','assets/Barrew.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
+	
 }
 
 function create(){
-	this.physics.world.setBounds(0, 0, 2000, 2000);
+	this.physics.world.setBounds(0, 0, 2000, 1500);
 	
-	this.add.image(1000,1000,'background');
+	this.add.image(1000,750,'background');
 	
 	house = this.physics.add.staticGroup();
 	house.create(590,300,'house');
 	house.create(590,600,'house');
 	
+	barriere = this.physics.add.staticGroup();
+	barriere.create(-5,590,'wall');
+	barriere.create(1500,260,'wallw');
+	
+	house2 = this.physics.add.staticGroup();
+	house.create(141,1200,'house2');
+	
+	
 	tree = this.physics.add.staticGroup();
 	tree.create(590,820,'tree');
 
+	forest = this.physics.add.staticGroup({
+		key: 'tree',
+		repeat:6,
+		setXY: {x:50,y:-48,stepX:130}
+	});
+	
 	player = this.physics.add.sprite(390,300,'perso');
 	this.physics.add.collider(player,house);
+	this.physics.add.collider(player,house2);
 	this.physics.add.collider(player,tree);
+	this.physics.add.collider(player,forest);
+	this.physics.add.collider(player,barriere);
 	
 	this.cameras.main.startFollow(player);
-	this.cameras.main.setBounds(0, 0, 2000, 2000);
+	this.cameras.main.setBounds(0, 0, 2000, 1500);
 	
 	cursors = this.input.keyboard.createCursorKeys(); 
 	
@@ -89,7 +111,8 @@ function create(){
 		frameRate: 20
 	});
 
-	
+	npc = this.physics.add.staticGroup();
+	npc.create(480,920,'npc');
 
 
 
