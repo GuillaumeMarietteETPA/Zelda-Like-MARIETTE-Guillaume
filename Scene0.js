@@ -4,8 +4,8 @@ class Scene0 extends Phaser.Scene{
 }
 
 init(data){
-	var wall;
 	var player;
+	var wall;
 	var ennemy;
 	var cursors;
 	var house;
@@ -41,6 +41,8 @@ create(){
 	this.house2 = this.physics.add.staticGroup();
 	this.house.create(141,1200,'house2');
 	
+	this.npc = this.physics.add.staticGroup();
+	this.npc.create(480,950,'npc');
 	
 	this.tree = this.physics.add.staticGroup();
 	this.tree.create(590,820,'tree');
@@ -52,13 +54,14 @@ create(){
 	});
 	
 	this.player = this.physics.add.sprite(390,300,'perso');
-	this.physics.add.collider(player,house);
-	this.physics.add.collider(player,house2);
-	this.physics.add.collider(player,tree);
-	this.physics.add.collider(player,forest);
-	this.physics.add.collider(player,barriere);
+	this.player.body.setCollideWorldBounds(true);
+	this.physics.add.collider(this.player,this.house);
+	this.physics.add.collider(this.player,this.house2);
+	this.physics.add.collider(this.player,this.tree);
+	this.physics.add.collider(this.player,this.forest);
+	this.physics.add.collider(this.player,this.barriere);
 	
-	this.cameras.main.startFollow(player);
+	this.cameras.main.startFollow(this.player);
 	this.cameras.main.setBounds(0, 0, 2000, 1500);
 	
 	this.cursors = this.input.keyboard.createCursorKeys(); 
@@ -97,8 +100,7 @@ create(){
 		frameRate: 20
 	});
 
-	this.npc = this.physics.add.staticGroup();
-	this.npc.create(480,920,'npc');
+	
 
 
 
@@ -110,46 +112,46 @@ create(){
 
 
 update(){
-	if(cursors.down.isDown){
+	if(this.cursors.down.isDown){
 		this.player.anims.play('down', true);
-		if(cursors.shift.isDown){
-			player.setVelocityY(300);
-			player.setVelocityX(0);
+		if(this.cursors.shift.isDown){
+			this.player.setVelocityY(300);
+			this.player.setVelocityX(0);
 		}else{
-			player.setVelocityY(150);
-			player.setVelocityX(0);
+			this.player.setVelocityY(150);
+			this.player.setVelocityX(0);
 	
-	}}else if(cursors.up.isDown){
-		player.anims.play('up', true);
-		if(cursors.shift.isDown){
-			player.setVelocityY(-300);
-			player.setVelocityX(0);
+	}}else if(this.cursors.up.isDown){
+		this.player.anims.play('up', true);
+		if(this.cursors.shift.isDown){
+			this.player.setVelocityY(-300);
+			this.player.setVelocityX(0);
 		}else{
-			player.setVelocityY(-150);
-			player.setVelocityX(0);
+			this.player.setVelocityY(-150);
+			this.player.setVelocityX(0);
 	
-	}}else if(cursors.right.isDown){
-		player.anims.play('right', true);
-			if(cursors.shift.isDown){
-			player.setVelocityY(0);
-			player.setVelocityX(300);
+	}}else if(this.cursors.right.isDown){
+		this.player.anims.play('right', true);	
+			if(this.cursors.shift.isDown){
+			this.player.setVelocityY(0);
+			this.player.setVelocityX(300);
 		}else{
-			player.setVelocityY(0);
-			player.setVelocityX(150);
+			this.player.setVelocityY(0);
+			this.player.setVelocityX(150);
 	
-	}}else if(cursors.left.isDown){
-		player.anims.play('left', true);
-			if(cursors.shift.isDown){
-			player.setVelocityY(0);
-			player.setVelocityX(-300);
+	}}else if(this.cursors.left.isDown){
+		this.player.anims.play('left', true);
+			if(this.cursors.shift.isDown){
+			this.player.setVelocityY(0);
+			this.player.setVelocityX(-300);
 		}else{
-			player.setVelocityY(0);
-			player.setVelocityX(-150);
+			this.player.setVelocityY(0);
+			this.player.setVelocityX(-150);
 	
 		}}else{
-		player.anims.play('stop', true);
-		player.setVelocityX(0);
-		player.setVelocityY(0);
+		this.player.anims.play('stop', true);
+		this.player.setVelocityX(0);
+		this.player.setVelocityY(0);
 	}
 	
 	
