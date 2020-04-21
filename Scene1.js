@@ -1,6 +1,6 @@
-class Scene0 extends Phaser.Scene{
+class Scene1 extends Phaser.Scene{
 	constructor(){
-		super('Scene0');
+		super('Scene1');
 }
 
 init(data){
@@ -8,66 +8,34 @@ init(data){
 	var wall;
 	var ennemy;
 	var cursors;
-	var house;	
+	var house;
 	var tree;
-	var change;
 }
 
 
 preload(){
-	this.load.image('background','assets/Village2.png');
-	this.load.image('house','assets/House.png');
-	this.load.image('house2','assets/House2.png');
 	this.load.image('tree','assets/Arbre.png');
-	this.load.image('npc','assets/npcpapi1.png');
-	this.load.image('wall','assets/Barre.png');
-	this.load.image('wallw','assets/Barrew.png');
 	this.load.image('alpha','assets/change.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
-	
+	this.load.spritesheet('spirit','assets/Spirit.png',{frameWidth: 51, frameHeight: 72});
+
 }
 
 create(){
 	this.physics.world.setBounds(0, 0, 2000, 1500);
 	
-	this.add.image(1000,750,'background');
+	this.add.image(1000,750,'');
 	
 	this.change = this.physics.add.staticGroup();
-	this.change.create(2000,1000,'alpha');
-	
-	
-	this.house = this.physics.add.staticGroup();
-	this.house.create(590,300,'house');
-	this.house.create(590,600,'house');
-	
-	
-	this.barriere = this.physics.add.staticGroup();
-	this.barriere.create(-5,590,'wall');
-	this.barriere.create(1500,260,'wallw');
-	
-	this.house2 = this.physics.add.staticGroup();
-	this.house.create(141,1200,'house2');
-	
-	this.npc = this.physics.add.staticGroup();
-	this.npc.create(480,950,'npc');
-	
-	this.tree = this.physics.add.staticGroup();
-	this.tree.create(590,820,'tree');
+	this.change.create(0,0,'alpha');
 
-	this.forest = this.physics.add.staticGroup({
-		key: 'tree',
-		repeat:6,
-		setXY: {x:50,y:-48,stepX:130}
-	});
-	
-	this.player = this.physics.add.sprite(390,300,'perso');
+	this.player = this.physics.add.sprite(60,300,'perso');
 	this.player.body.setCollideWorldBounds(true);
 	this.physics.add.collider(this.player,this.house);
 	this.physics.add.collider(this.player,this.house2);
 	this.physics.add.collider(this.player,this.tree);
 	this.physics.add.collider(this.player,this.forest);
 	this.physics.add.collider(this.player,this.barriere);
-	
 	
 	this.cameras.main.startFollow(this.player);
 	this.cameras.main.setBounds(0, 0, 2000, 1500);
@@ -107,15 +75,19 @@ create(){
 		frames: [{key: 'perso', frame:0}],
 		frameRate: 20
 	});
+
 	
 	this.change.setAlpha(0);
 	
 	this.physics.add.overlap(this.player, this.change, maFonction, null, this);
 	
 	function maFonction(){
-		this.scene.start('Scene1');
+		this.scene.start('Scene0');
 		console.log("Transition");
 	}
+
+
+
 
 }
 	
@@ -164,8 +136,8 @@ update(){
 		this.player.setVelocityX(0);
 		this.player.setVelocityY(0);
 	}
-		
-		
+	
+	
 	
 
 
