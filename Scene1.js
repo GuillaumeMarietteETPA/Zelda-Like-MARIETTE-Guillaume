@@ -10,10 +10,12 @@ init(data){
 	var cursors;
 	var house;
 	var tree;
+	var pv = 1;
 }
 
 
 preload(){
+	this.load.image('forest','assets/Forest.png');
 	this.load.image('tree','assets/Arbre.png');
 	this.load.image('alpha','assets/change.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
@@ -24,12 +26,12 @@ preload(){
 create(){
 	this.physics.world.setBounds(0, 0, 2000, 1500);
 	
-	this.add.image(1000,750,'');
+	this.add.image(1000,750,'forest');
 	
 	this.change = this.physics.add.staticGroup();
-	this.change.create(0,0,'alpha');
+	this.change.create(0,500,'alpha');
 
-	this.player = this.physics.add.sprite(60,300,'perso');
+	this.player = this.physics.add.sprite(60,750,'perso');
 	this.player.body.setCollideWorldBounds(true);
 	this.physics.add.collider(this.player,this.house);
 	this.physics.add.collider(this.player,this.house2);
@@ -75,7 +77,23 @@ create(){
 		frames: [{key: 'perso', frame:0}],
 		frameRate: 20
 	});
-
+	
+	this.spirit = this.physics.add.sprite(500,750,'spirit');
+	this.spirit.body.setCollideWorldBounds(true);
+	this.physics.add.collider(this.player,this.spirit);
+	
+/*	this.tweens.add({
+    targets: this.spirit,
+    x:0,
+	alpha: { start: 0, to: 1 },
+    alpha: 1,
+    alpha: '+=1',
+    ease: 'Linear',
+    duration: 6000,
+    repeat: 0,
+    yoyo: false
+});*/
+	
 	
 	this.change.setAlpha(0);
 	
@@ -137,12 +155,19 @@ update(){
 		this.player.setVelocityY(0);
 	}
 	
+
+
+
+}
+
+/*hitPlayer(Player, Spirit){
+	this.physics.pause();
+	this.player.setTint(0xff0000);
+	this.player.anims.play('stop');
+		gameOver=true;
 	
-	
+}*/
 
-
-
-	}
 
 }
 

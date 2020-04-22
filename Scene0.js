@@ -165,7 +165,15 @@ update(){
 		this.player.setVelocityY(0);
 	}
 		
-		
+
+// add weapon
+/*this.weapon = this.add.sprite(10, 0, 'sword');
+this.weapon.setScale(0.5);
+this.weapon.setSize(8, 8);
+this.physics.world.enable(this.weapon);
+ 
+this.container.add(this.weapon);
+this.attacking = false;*/
 	
 
 
