@@ -15,7 +15,7 @@ init(data){
 
 
 preload(){
-	this.load.image('background','assets/Village2.png');
+	this.load.image('background','assets/Village3.png');
 	this.load.image('house','assets/House.png');
 	this.load.image('house2','assets/House2.png');
 	this.load.image('tree','assets/Arbre.png');
@@ -53,6 +53,7 @@ create(){
 	
 	this.tree = this.physics.add.staticGroup();
 	this.tree.create(590,820,'tree');
+	this.tree.create(1930,750,'tree');
 
 	this.forest = this.physics.add.staticGroup({
 		key: 'tree',
