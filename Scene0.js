@@ -19,6 +19,8 @@ preload(){
 	this.load.image('house','assets/House.png');
 	this.load.image('house2','assets/House2.png');
 	this.load.image('tree','assets/Arbre.png');
+	this.load.image('treeSm','assets/Arbuste.png');
+	this.load.image('buisson','assets/Buisson.png');
 	this.load.image('npc','assets/npcpapi1.png');
 	this.load.image('wall','assets/Barre.png');
 	this.load.image('wallw','assets/Barrew.png');
@@ -34,26 +36,19 @@ create(){
 	
 	this.change = this.physics.add.staticGroup();
 	this.change.create(2000,1000,'alpha');
-	
-	
-	this.house = this.physics.add.staticGroup();
-	this.house.create(590,300,'house');
-	this.house.create(590,600,'house');
-	
+
 	
 	this.barriere = this.physics.add.staticGroup();
 	this.barriere.create(-5,590,'wall');
 	this.barriere.create(1500,260,'wallw');
 	
 	this.house2 = this.physics.add.staticGroup();
-	this.house.create(141,1200,'house2');
+	this.house2.create(141,1200,'house2');
 	
 	this.npc = this.physics.add.staticGroup();
 	this.npc.create(480,950,'npc');
 	
-	this.tree = this.physics.add.staticGroup();
-	this.tree.create(590,820,'tree');
-	this.tree.create(1930,750,'tree');
+	
 
 	this.forest = this.physics.add.staticGroup({
 		key: 'tree',
@@ -61,14 +56,22 @@ create(){
 		setXY: {x:50,y:-48,stepX:130}
 	});
 	
+	this.treeSm = this.physics.add.staticGroup({
+		key: 'treeSm',
+		repeat:2,
+		setXY: {x:143,y:1350,stepY:80}
+		
+	});
+	
+	
+	
 	this.player = this.physics.add.sprite(390,300,'perso');
+	this.player.setSize(60, 75);
 	this.player.body.setCollideWorldBounds(true);
-	this.physics.add.collider(this.player,this.house);
 	this.physics.add.collider(this.player,this.house2);
-	this.physics.add.collider(this.player,this.tree);
 	this.physics.add.collider(this.player,this.forest);
 	this.physics.add.collider(this.player,this.barriere);
-	
+	this.physics.add.collider(this.player,this.treeSm);
 	
 	this.cameras.main.startFollow(this.player);
 	this.cameras.main.setBounds(0, 0, 2000, 1500);
@@ -108,6 +111,25 @@ create(){
 		frames: [{key: 'perso', frame:0}],
 		frameRate: 20
 	});
+	
+	this.house = this.physics.add.staticImage(590, 300, 'house');
+	this.house.setSize(280, 280,0,0).setOffset(0, 152);
+	this.physics.add.collider(this.player,this.house);
+	this.house = this.physics.add.staticImage(590, 600, 'house');
+	//this.house.create(590,300,'house');
+	this.house.setSize(280, 280,0,0).setOffset(0, 152);
+	//this.house.create(590,600,'house');
+	this.physics.add.collider(this.player,this.house);
+	
+	this.tree = this.physics.add.staticGroup();
+	this.tree.create(590,820,'tree');
+	this.tree.create(1930,750,'tree');
+	this.physics.add.collider(this.player,this.tree);
+	
+	
+	
+	
+	
 	
 	this.change.setAlpha(0);
 	
@@ -167,14 +189,8 @@ update(){
 	}
 		
 
-// add weapon
-/*this.weapon = this.add.sprite(10, 0, 'sword');
-this.weapon.setScale(0.5);
-this.weapon.setSize(8, 8);
-this.physics.world.enable(this.weapon);
- 
-this.container.add(this.weapon);
-this.attacking = false;*/
+
+
 	
 
 

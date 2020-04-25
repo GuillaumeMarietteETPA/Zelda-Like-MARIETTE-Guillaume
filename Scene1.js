@@ -18,6 +18,7 @@ preload(){
 	this.load.image('forest','assets/Forest.png');
 	this.load.image('tree','assets/Arbre.png');
 	this.load.image('alpha','assets/change.png');
+	this.load.image('sword','assets/sword1.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
 	this.load.spritesheet('spirit','assets/Spirit.png',{frameWidth: 51, frameHeight: 72});
 
@@ -94,6 +95,14 @@ create(){
     yoyo: false
 });*/
 	
+	
+	this.weapon = this.add.sprite(100, 100, 'sword');
+this.weapon.setScale(0.4);
+this.weapon.setSize(25, 25);
+this.physics.world.enable(this.weapon);
+ 
+//this.container.add(this.weapon);
+this.attacking = false;
 	
 	this.change.setAlpha(0);
 	
