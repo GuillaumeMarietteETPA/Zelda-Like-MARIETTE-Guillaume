@@ -7,6 +7,7 @@ init(data){
 	var player;
 	var wall;
 	var ennemy;
+	var head;
 	var cursors;
 	var house;
 	var tree;
@@ -20,8 +21,7 @@ preload(){
 	this.load.image('alpha','assets/change.png');
 	this.load.image('sword','assets/sword1.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
-	this.load.spritesheet('spirit','assets/Spirit.png',{frameWidth: 51, frameHeight: 72});
-	this.load.spritesheet('head','assets/Head.png',{frameWidth: 51, frameHeight: 72});
+	this.load.spritesheet('head','assets/HeadH.png',{frameWidth: 81, frameHeight: 69});
 
 	//this.load.audio('cavemusic','assets/.ogg');
 }
@@ -36,7 +36,7 @@ create(){
 	
 	
 
-	this.player = this.physics.add.sprite(60,300,'perso');
+	this.player = this.physics.add.sprite(376,150,'perso');
 	this.player.setSize(60, 75);
 	this.player.body.setCollideWorldBounds(true);
 	this.physics.add.collider(this.player,this.house);
@@ -84,24 +84,32 @@ create(){
 		frameRate: 20
 	});
 	
+		this.mdooro = this.physics.add.staticGroup();
+		this.mdooro.create(376,20,'mdooro');
+	
+	this.head = this.physics.add.sprite(300,350,'head');
+	this.head.body.setCollideWorldBounds(true);
+	this.physics.add.collider(this.player,this.head);
+	
+	this.anims.create({
+		key:'downH',
+		frames: this.anims.generateFrameNumbers('head', {start: 0, end: 3}),
+		frameRate: 10,
+		repeat: -1
+	});
 	
 	
 	
-
-	
-
-//this.physics.add.overlap(this.weapon, this.spirit, false, this);	
+	this.head.anims.play('downH', true);
 	
 	
-	/*this.change.setAlpha(0);
+	this.physics.add.overlap(this.player, this.mdooro, mistery, null, this);
 	
-	this.physics.add.overlap(this.player, this.change, maFonction, null, this);
-	
-	function maFonction(){
+	function mistery(){
 		
 		this.scene.start('Scene1');
 		console.log("Transition");
-	}*/
+	}
 
 
 
@@ -154,21 +162,17 @@ update(){
 		this.player.setVelocityY(0);
 	}
 	
-	/*	if(this.spirit.velocityY > 1) {
-	this.spirit.anims.play('downS', true);
-	}
-	else if(this.spirit.velocityY < -1) {
-	this.spirit.anims.play('upS', true);
-	}
-	else if(this.spirit.velocityX < -1) {
-	this.spirit.anims.play('leftS', true);
-	}
-	else if(this.spirit.velocityX > 1) {
-	this.spirit.anims.play('rightS', true);
-	}
-	else{
-	this.spirit.anims.play('stopS', true);
-	}*/
+		
+	if(this.cursors.space.isDown){
+		this.attacking = 1;
+		this.player.anims.play('attack', true);
+		console.log("Attack");
+		}
+		else {
+		this.attacking = 0;
+		}
+	
+	
 
 
 
@@ -178,13 +182,23 @@ update(){
 
 }
 
-/*function hitPlayer(Player, Head){
-	this.physics.pause();
-	this.player.setTint(0xff0000);
-	this.player.anims.play('stop');
-	this.gameOver=true;
+function hitHPlayer(player, head){
+	if (this.attacking == 1) {
+		this.head.destroy();
+		
+		this.potion = this.physics.add.group({
+		key: 'potion',
+		repeat: 0,
+		setXY: {
+		x: head.x,
+		y: head.y,
+			}
+		})
+	
+	}
+	
+	
 
-
-}*/
+}
 
 

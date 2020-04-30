@@ -31,7 +31,7 @@ create(){
 
 update(){
 	if(this.cursors.up.isDown) {
-		this.scene.start('Scene0');
+		this.scene.start('command');
 
 		}
 	

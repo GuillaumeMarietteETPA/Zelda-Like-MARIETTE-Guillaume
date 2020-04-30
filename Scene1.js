@@ -10,7 +10,9 @@ init(data){
 	var cursors;
 	var house;
 	var tree;
-	var coeur = 3;
+	var potion;
+	var spirit;
+	var coeur;
 	var spiritLife = 1;
 	var attacking = 0;
 }
@@ -66,7 +68,7 @@ create(){
 	this.physics.add.collider(this.player,this.forest);
 	this.physics.add.collider(this.player,this.barriere);
 	
-	this.physics.add.overlap(this.player, this.potion, collectPotion, null, this);
+	
 	
 	this.cameras.main.startFollow(this.player);
 	this.cameras.main.setBounds(0, 0, 2000, 1500);
@@ -116,7 +118,9 @@ create(){
 	this.spirit = this.physics.add.sprite(1300,500,'spirit');
 	this.spirit.body.setCollideWorldBounds(true);
 	this.physics.add.collider(this.player,this.spirit, hitPlayer, null, this);
+	this.physics.add.collider(this.player,this.spirit, hitMonster, null, this);
 	
+	this.physics.add.overlap(this.player, this.potion, collectPotion, null, this);
 	
 	this.tweens.add({
     targets: this.spirit,
@@ -176,12 +180,11 @@ this.physics.world.enable(this.weapon);
 this.attacking = false;*/
 	
 	
-	this.mdoorc = this.physics.add.staticGroup();
+	/*this.mdoorc = this.physics.add.staticGroup();
 	this.mdoorc.create(1300,250,'mdoorc');
-	this.physics.add.collider(this.player,this.mdoorc);
-	this.mdooro = this.physics.add.staticGroup();
-	this.mdooro.create(1300,250,'mdooro');
-	this.mdooro.setAlpha(0);
+	this.physics.add.collider(this.player,this.mdoorc);*/
+	
+	
 	
 	
 	this.coeur1 = this.add.image(700,40,'coeur1').setScrollFactor(0);
@@ -208,13 +211,7 @@ this.attacking = false;*/
 		console.log("Transition");
 	}
 	
-	this.physics.add.overlap(this.player, this.mdooro, mistery, null, this);
-
-	function mistery(){
-		this.music.stop();
-		this.scene.start('Scene2');
-		console.log("Transition");
-	}
+	
 
 }
 	
@@ -267,16 +264,17 @@ update(){
 		
 		
 		if(this.cursors.space.isDown){
-		this.attacking = true;
+		this.attacking = 1;
 		this.player.anims.play('attack', true);
 		console.log("Attack");
 		}
 		else {
-		this.attacking = false;
+		this.attacking = 0;
 		}
 	
+	//anims spirit
 		
-		if(this.spirit.velocityY > 1) {
+		/*if(this.spirit.velocityY > 1) {
 	this.spirit.anims.play('downS', true);
 	}
 	else if(this.spirit.velocityY < -1) {
@@ -290,11 +288,7 @@ update(){
 	}
 	else{
 	this.spirit.anims.play('stopS', true);
-	}
-
-
-	
-
+	}*/
 	
 
 
@@ -303,27 +297,40 @@ update(){
 
 }
 
-function hitPlayer(Player, Spirit){
+function hitPlayer(player, spirit){
 	if (this.attacking == 1) {
-		this.spirit.disableBody(true,true);
+		this.spirit.destroy();
 		
 		this.potion = this.physics.add.group({
 		key: 'potion',
 		repeat: 0,
 		setXY: {
-		x: Spirit.x,
-		y: Spirit.y,
+		x: spirit.x,
+		y: spirit.y,
 			}
 		})
 		
-		this.mdoorc.destroy();
-		this.mdooro.setAlpha(1);
+		//this.mdoorc.destroy();
+		this.mdooro = this.physics.add.staticGroup();
+		this.mdooro.create(1300,260,'mdooro');
 		
-	
+		this.physics.add.overlap(this.player, this.mdooro, mistery, null, this);
+
+	function mistery(){
+		this.music.stop();
+		this.scene.start('Scene2',{coeur: this.coeur});
+		console.log("Transition");
+	}
 	
 	}
 	
-	else if (this.attacking == 0) {
+	
+}
+
+function hitMonster(player, spirit){
+
+
+//if (this.attacking == 0) {
 	
 	this.coeur = this.coeur - 1;
 	this.delay = 500;
@@ -341,20 +348,22 @@ function hitPlayer(Player, Spirit){
 	this.player.setTint(0xff0000);
 	this.gameOver=true;
 	}
-	}
+	//}
+
 }
+
 
 function collectPotion (player, potion){
 		 this.potion.disableBody(true, true);
 		 
-		 if (this.coeur == 2) {
+		/* if (this.coeur == 2) {
 			 this.coeur3.setAlpha(1);
 			 
 		 }
 		 else if (this.coeur == 1) {
 			 this.coeur2.setAlpha(1);
 			 
-		 }
+		 }*/
 	
 
-	};
+}
