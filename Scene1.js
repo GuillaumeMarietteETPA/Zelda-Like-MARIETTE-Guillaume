@@ -120,7 +120,7 @@ create(){
 	this.physics.add.collider(this.player,this.spirit, hitPlayer, null, this);
 	this.physics.add.collider(this.player,this.spirit, hitMonster, null, this);
 	
-	this.physics.add.overlap(this.player, this.potion, collectPotion, null, this);
+	
 	
 	this.tweens.add({
     targets: this.spirit,
@@ -130,7 +130,7 @@ create(){
     //alpha: '+=1',
     ease: 'Linear',
     duration: 10000,
-    repeat: 0,
+    repeat: -1,
     yoyo: true
 });
 	
@@ -310,6 +310,8 @@ function hitPlayer(player, spirit){
 			}
 		})
 		
+		//this.physics.add.overlap(this.player, this.potion, collectPotion, null, this);
+		
 		//this.mdoorc.destroy();
 		this.mdooro = this.physics.add.staticGroup();
 		this.mdooro.create(1300,260,'mdooro');
@@ -356,14 +358,14 @@ function hitMonster(player, spirit){
 function collectPotion (player, potion){
 		 this.potion.disableBody(true, true);
 		 
-		/* if (this.coeur == 2) {
+		if (this.coeur == 2) {
 			 this.coeur3.setAlpha(1);
 			 
 		 }
 		 else if (this.coeur == 1) {
 			 this.coeur2.setAlpha(1);
 			 
-		 }*/
+		 }
 	
 
 }

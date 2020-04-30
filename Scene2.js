@@ -23,7 +23,7 @@ preload(){
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
 	this.load.spritesheet('head','assets/HeadH.png',{frameWidth: 81, frameHeight: 69});
 
-	//this.load.audio('cavemusic','assets/.ogg');
+	this.load.audio('cavemusic','assets/musiccave.ogg');
 }
 
 create(){
@@ -34,6 +34,18 @@ create(){
 	/*this.change = this.physics.add.staticGroup();
 	this.change.create(1000,500,'alpha');*/
 	
+	this.music = this.sound.add('cavemusic');
+	
+	var musicConfig = {
+	mute: false,
+	volume: 0.3,
+	rate: 1,
+	detune: 0,
+	loop: true,
+	delay: 0
+	
+	}
+	this.music.play(musicConfig);
 	
 
 	this.player = this.physics.add.sprite(376,150,'perso');
@@ -89,7 +101,7 @@ create(){
 	
 	this.head = this.physics.add.sprite(300,350,'head');
 	this.head.body.setCollideWorldBounds(true);
-	this.physics.add.collider(this.player,this.head);
+	this.physics.add.collider(this.player,this.head, hitHPlayer, null, this);
 	
 	this.anims.create({
 		key:'downH',
@@ -98,6 +110,17 @@ create(){
 		repeat: -1
 	});
 	
+	this.tweens.add({
+    targets: this.head,
+    y:0,
+	//alpha: { start: 0, to: 1 },
+    //alpha: 1,
+    //alpha: '+=1',
+    ease: 'Linear',
+    duration: 5000,
+    repeat: -1,
+    yoyo: true
+});
 	
 	
 	this.head.anims.play('downH', true);
@@ -106,7 +129,7 @@ create(){
 	this.physics.add.overlap(this.player, this.mdooro, mistery, null, this);
 	
 	function mistery(){
-		
+		this.music.stop();
 		this.scene.start('Scene1');
 		console.log("Transition");
 	}
@@ -201,4 +224,9 @@ function hitHPlayer(player, head){
 
 }
 
+function collectPotion (player, potion){
+	this.potion.destroy();
 
+
+
+}

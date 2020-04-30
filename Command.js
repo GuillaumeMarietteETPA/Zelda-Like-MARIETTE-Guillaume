@@ -24,7 +24,7 @@ create(){
 	this.add.image(410,380, 'touche');
 	
 	this.time.addEvent({
-    delay: 4000,
+    delay: 3300,
 	callback: ()=>{ this.scene.start('Scene0');
 	}})
 
