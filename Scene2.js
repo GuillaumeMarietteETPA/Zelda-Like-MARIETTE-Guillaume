@@ -1,6 +1,6 @@
-class Scene0 extends Phaser.Scene{
+class Scene2 extends Phaser.Scene{
 	constructor(){
-		super('Scene0');
+		super('Scene2');
 }
 
 init(data){
@@ -8,93 +8,45 @@ init(data){
 	var wall;
 	var ennemy;
 	var cursors;
-	var house;	
+	var house;
 	var tree;
-	var change;
-	var coeur = 3;
+	var coeur;
 }
 
 
 preload(){
-	this.load.image('background','assets/Village3.png');
-	this.load.image('house','assets/House.png');
-	this.load.image('house2','assets/House2.png');
+	this.load.image('cave','assets/CaveMistery.png');
 	this.load.image('tree','assets/Arbre.png');
-	this.load.image('treeSm','assets/Arbuste.png');
-	this.load.image('buisson','assets/Buisson.png');
-	this.load.image('npc','assets/npcpapi1.png');
-	this.load.image('wall','assets/Barre.png');
-	this.load.image('wallw','assets/Barrew.png');
 	this.load.image('alpha','assets/change.png');
-	this.load.image('coeur1','assets/coeur1.png');
-	this.load.image('coeur2','assets/coeur2.png');
-	this.load.image('coeur3','assets/coeur3.png');
+	this.load.image('sword','assets/sword1.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
-	
-	this.load.audio('villagemusic','assets/village.ogg');
+	this.load.spritesheet('spirit','assets/Spirit.png',{frameWidth: 51, frameHeight: 72});
+	this.load.spritesheet('head','assets/Head.png',{frameWidth: 51, frameHeight: 72});
+
+	//this.load.audio('cavemusic','assets/.ogg');
 }
 
 create(){
-	this.physics.world.setBounds(0, 0, 2000, 1500);
+	this.physics.world.setBounds(0, 0, 752, 750);
 	
-	this.add.image(1000,750,'background');
+	this.add.image(376,375,'cave');
 	
-	this.music = this.sound.add('villagemusic');
-	
-	var musicConfig = {
-	mute: false,
-	volume: 0.3,
-	rate: 1,
-	detune: 0,
-	loop: true,
-	delay: 0
-	}
-	this.music.play(musicConfig);
-	
-	
-	
-	
-	this.change = this.physics.add.staticGroup();
-	this.change.create(2000,1000,'alpha');
-
-	
-	this.barriere = this.physics.add.staticGroup();
-	this.barriere.create(-5,590,'wall');
-	this.barriere.create(1500,260,'wallw');
-	
-	this.house2 = this.physics.add.staticGroup();
-	this.house2.create(141,1200,'house2');
-	
-	this.npc = this.physics.add.staticGroup();
-	this.npc.create(480,950,'npc');
+	/*this.change = this.physics.add.staticGroup();
+	this.change.create(1000,500,'alpha');*/
 	
 	
 
-	this.forest = this.physics.add.staticGroup({
-		key: 'tree',
-		repeat:6,
-		setXY: {x:50,y:-48,stepX:130}
-	});
-	
-	this.treeSm = this.physics.add.staticGroup({
-		key: 'treeSm',
-		repeat:2,
-		setXY: {x:143,y:1350,stepY:80}
-		
-	});
-	
-	
-	
-	this.player = this.physics.add.sprite(390,300,'perso');
+	this.player = this.physics.add.sprite(60,300,'perso');
 	this.player.setSize(60, 75);
 	this.player.body.setCollideWorldBounds(true);
+	this.physics.add.collider(this.player,this.house);
 	this.physics.add.collider(this.player,this.house2);
+	this.physics.add.collider(this.player,this.tree);
 	this.physics.add.collider(this.player,this.forest);
 	this.physics.add.collider(this.player,this.barriere);
-	this.physics.add.collider(this.player,this.treeSm);
 	
 	this.cameras.main.startFollow(this.player);
-	this.cameras.main.setBounds(0, 0, 2000, 1500);
+	this.cameras.main.setBounds(0, 0, 1000, 1000);
 	
 	this.cursors = this.input.keyboard.createCursorKeys(); 
 	
@@ -132,37 +84,27 @@ create(){
 		frameRate: 20
 	});
 	
-	this.house = this.physics.add.staticImage(590, 300, 'house');
-	this.house.setSize(280, 280,0,0).setOffset(0, 152);
-	this.physics.add.collider(this.player,this.house);
-	this.house = this.physics.add.staticImage(590, 600, 'house');
-	//this.house.create(590,300,'house');
-	this.house.setSize(280, 280,0,0).setOffset(0, 152);
-	//this.house.create(590,600,'house');
-	this.physics.add.collider(this.player,this.house);
-	
-	this.tree = this.physics.add.staticGroup();
-	this.tree.create(590,820,'tree');
-	this.tree.create(1930,750,'tree');
-	this.physics.add.collider(this.player,this.tree);
-	
-	
-	this.coeur1 = this.add.image(700,40,'coeur1').setScrollFactor(0);
-	this.coeur2 = this.add.image(650,40,'coeur2').setScrollFactor(0);
-	this.coeur3 = this.add.image(600,40,'coeur3').setScrollFactor(0);
 	
 	
 	
+
 	
-	this.change.setAlpha(0);
+
+//this.physics.add.overlap(this.weapon, this.spirit, false, this);	
+	
+	
+	/*this.change.setAlpha(0);
 	
 	this.physics.add.overlap(this.player, this.change, maFonction, null, this);
 	
 	function maFonction(){
-		this.music.stop();
-		this.scene.start('Scene1',{coeur: this.coeur});
+		
+		this.scene.start('Scene1');
 		console.log("Transition");
-	}
+	}*/
+
+
+
 
 }
 	
@@ -211,19 +153,32 @@ update(){
 		this.player.setVelocityX(0);
 		this.player.setVelocityY(0);
 	}
-		
+	
+	/*	if(this.spirit.velocityY > 1) {
+	this.spirit.anims.play('downS', true);
+	}
+	else if(this.spirit.velocityY < -1) {
+	this.spirit.anims.play('upS', true);
+	}
+	else if(this.spirit.velocityX < -1) {
+	this.spirit.anims.play('leftS', true);
+	}
+	else if(this.spirit.velocityX > 1) {
+	this.spirit.anims.play('rightS', true);
+	}
+	else{
+	this.spirit.anims.play('stopS', true);
+	}*/
 
 
 
 	
+}
 
-
-
-	}
 
 }
 
-/*function hitPlayer(Player, Spirit, Head){
+/*function hitPlayer(Player, Head){
 	this.physics.pause();
 	this.player.setTint(0xff0000);
 	this.player.anims.play('stop');
