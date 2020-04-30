@@ -31,7 +31,6 @@ preload(){
 	this.load.image('mdoorc','assets/MisteryDoorClose2.png');
 	this.load.spritesheet('perso','assets/Character.png',{frameWidth: 72, frameHeight: 90});
 	this.load.spritesheet('spirit','assets/Spirit.png',{frameWidth: 51, frameHeight: 72});
-	this.load.spritesheet('head','assets/Head.png',{frameWidth: 51, frameHeight: 72});
 
 	this.load.audio('forestmusic','assets/forest.ogg');
 }
@@ -169,7 +168,7 @@ create(){
 		frameRate: 20
 	});
 	
-	
+	this.spirit.anims.play('leftS', true);
 // weapon
 	/*this.weapon = this.add.sprite(100, 100, 'sword');
 this.weapon.setScale(0.4);
